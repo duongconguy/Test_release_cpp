@@ -1,3 +1,4 @@
+#define UNICODE
 #include <windows.h>
 
 // Hàm xử lý sự kiện
@@ -17,7 +18,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-// Hàm chính dùng chuẩn Unicode
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
     const wchar_t CLASS_NAME[] = L"SimpleWindowClass";
 
@@ -26,10 +26,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
     wc.hInstance = hInstance;
     wc.lpszClassName = CLASS_NAME;
 
-    if (!RegisterClassW(&wc)) {
-        MessageBoxW(NULL, L"Không đăng ký được class cửa sổ", L"Lỗi", MB_OK | MB_ICONERROR);
-        return 0;
-    }
+    RegisterClassW(&wc);
 
     HWND hwnd = CreateWindowExW(
         0, CLASS_NAME, L"Cửa sổ đơn giản", WS_OVERLAPPEDWINDOW,
@@ -37,10 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
         NULL, NULL, hInstance, NULL
     );
 
-    if (hwnd == NULL) {
-        MessageBoxW(NULL, L"Không tạo được cửa sổ", L"Lỗi", MB_OK | MB_ICONERROR);
-        return 0;
-    }
+    if (hwnd == NULL) return 0;
 
     CreateWindowW(L"BUTTON", L"Bấm vào đây",
         WS_VISIBLE | WS_CHILD,

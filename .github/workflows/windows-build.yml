@@ -15,13 +15,13 @@ jobs:
     - name: Set up MSVC
       uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Build EXE
+    - name: Build project
       run: |
-        cl /EHsc main.cpp /Fe:SimpleApp.exe /link user32.lib
+        cl /EHsc /Fe:wallet_system.exe *.cpp
 
     - name: Upload EXE to release
       uses: softprops/action-gh-release@v1
       with:
-        files: SimpleApp.exe
+        files: wallet_system.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
